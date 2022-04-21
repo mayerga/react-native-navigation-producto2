@@ -9,7 +9,7 @@ const Evolucion = () => {
     const navigation = useNavigation();
 
     return(
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
             <View style={styles.containerMain}>
                 <View>
                     <Text>Hola</Text>
