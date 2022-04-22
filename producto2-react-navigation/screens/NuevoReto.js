@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, SafeAreaView, Button, TextInput, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Firebase from '../utils/Firebase';
+import Firebase from '../utils/firebase';
 
 const NuevoReto = (props) => {
     
@@ -20,7 +20,7 @@ const NuevoReto = (props) => {
         if (state.name === ''){
             alert('Please provide a reto')
         } else {
-            await Firebase.db.collecion('users').add({
+            await Firebase().db.collecion('users').add({
                 name: state.name,
                 email: state.email,
                 phone: state.phone

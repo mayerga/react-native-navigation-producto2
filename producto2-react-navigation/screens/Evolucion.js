@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Button, scrollView} from 'react-native';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
 import NuevoReto from '../screens/NuevoReto';
-import Firebase from '../utils/Firebase';
+import Firebase from '../utils/firebase';
 import { querySnapshot } from 'firebase/firestore';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
