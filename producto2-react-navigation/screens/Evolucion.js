@@ -6,31 +6,26 @@ import Firebase from '../utils/firebase';
 import { querySnapshot } from 'firebase/firestore';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../utils/Firebase';
+
+
+
+
+async function test() {
+    const querySnapshot = await getDocs(collection(db, "retos"));
+    querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`);
+    });
+}
+
 const screenHeight= Dimensions.get("screen").height;
 
 const Evolucion = () => {
     
     const navigation = useNavigation();
 
-    // const [users, setstate] = useState([]);
-
-    // useEffect(() => {
-    //     Firebase.db.collection('users').onSnapshot(querySnapshot => {
-    //         const users= [];
-            
-    //         querySnapshot.docs.forEach(doc => {
-    //             const {name, email, phone} = doc.data();
-    //             users.push({
-    //                 id: doc.id,
-    //                 name,
-    //                 email,
-    //                 phone
-    //             })
-    //         });
-
-    //         setUsers(users)
-    //     })
-    // }, []);
+    test();
 
     return(
         <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
