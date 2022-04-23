@@ -6,20 +6,7 @@ import { ListItem } from 'react-native-elements';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../utils/Firebase';
 
-const retosList = [];
-
-async function test() {
-    retosList = []
-    const querySnapshot = await getDocs(collection(db, "retos"));
-    querySnapshot.forEach((doc) => {
-        retosList.push(doc.data());
-    });
-    console.log(retosList)
-}
-
 const screenHeight= Dimensions.get("screen").height;
-
-
 
 const Item = ({ title }) => (
     <View style={styles.item}>
@@ -28,13 +15,28 @@ const Item = ({ title }) => (
   );
 
 const Evolucion = () => {
-
-    test();
     
+    const [retos, setRetos] = useState({});
+
+    useEffect(() => {
+        renderRetos();
+    }, []);
+
+    const renderRetos = async () => {
+        //retosList = []
+        const querySnapshot = await getDocs(collection(db, "retos"));
+        console.log(querySnapshot.docs[1].data().nombre);
+        setRetos(querySnapshot.docs);
+
+    }
+
+
+
+
     const navigation = useNavigation();
 
     const renderItem = ({ item }) => (
-        <Item title={item.nombre} />
+        <Item title={item.data().nombre} />
       );
 
 
@@ -45,13 +47,11 @@ const Evolucion = () => {
                     <Text>Hola</Text>
                 </View>
                 <Text>This is the Second screen</Text>
-                {console.log(retosList)}
                 <FlatList
-                    data={retosList}
+                    data={retos}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
-                {console.log(retosList)}
 
                 
                 {/* Botón para agregar tarea */}
