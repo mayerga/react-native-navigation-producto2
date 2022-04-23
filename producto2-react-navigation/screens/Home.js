@@ -2,9 +2,12 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import {View, Text, Button, TouchableOpacity, StyleSheet, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import firebase from '../utils/firebase';
+import {collection, getDocs} from 'firebase/firestore';
 
 
 const Home = () => {
+
 
     const navigation = useNavigation();
 
