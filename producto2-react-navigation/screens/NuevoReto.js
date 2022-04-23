@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, SafeAreaView, Button, TextInput, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Firebase from '../utils/firebase';
+import { collection, addDoc, setDoc } from "firebase/firestore";
 import { db } from '../utils/Firebase';
 
 const NuevoReto = (props) => {
@@ -21,11 +21,13 @@ const NuevoReto = (props) => {
         if(state.nombre === ''){
             alert('Por favor, añade un nombre')
         } else {
-            await db.collection('retos').add({
+            const docRef = await addDoc(collection(db, "retos"), {
                 nombre: state.nombre,
                 categoria: state.categoria,
                 detalle: state.detalle
+
             })
+            console.log("Document written with ID: ", docRef.id);
             navigation.navigate('Evolucion');
         }
     }
