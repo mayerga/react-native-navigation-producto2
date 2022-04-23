@@ -8,9 +8,11 @@ import { db } from '../utils/Firebase';
 
 const screenHeight= Dimensions.get("screen").height;
 
-const Item = ({ title }) => (
+const Item = ({ title, description, completado }) => (
     <View style={styles.item}>
       <Text>{title}</Text>
+      <Text>{description}</Text>
+      <Text>{completado}</Text>
     </View>
   );
 
@@ -25,18 +27,14 @@ const Evolucion = () => {
     const renderRetos = async () => {
         //retosList = []
         const querySnapshot = await getDocs(collection(db, "retos"));
-        console.log(querySnapshot.docs[1].data().nombre);
         setRetos(querySnapshot.docs);
 
     }
 
-
-
-
     const navigation = useNavigation();
 
     const renderItem = ({ item }) => (
-        <Item title={item.data().nombre} />
+        <Item title={item.data().nombre} description={item.data().detalle} completado={item.data().completado}/>
       );
 
 
