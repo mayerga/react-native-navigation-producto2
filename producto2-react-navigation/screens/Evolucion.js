@@ -6,9 +6,10 @@ import { ListItem } from 'react-native-elements';
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../utils/Firebase';
 
-const retosList = [{id: 1, nombre: 'test'}];
+const retosList = [];
 
 async function test() {
+    retosList = []
     const querySnapshot = await getDocs(collection(db, "retos"));
     querySnapshot.forEach((doc) => {
         retosList.push(doc.data());
@@ -44,12 +45,13 @@ const Evolucion = () => {
                     <Text>Hola</Text>
                 </View>
                 <Text>This is the Second screen</Text>
+                {console.log(retosList)}
                 <FlatList
                     data={retosList}
                     renderItem={renderItem}
                     keyExtractor={item => item.id}
                 />
-
+                {console.log(retosList)}
 
                 
                 {/* Botón para agregar tarea */}
