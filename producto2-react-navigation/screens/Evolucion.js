@@ -1,31 +1,41 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Button, scrollView} from 'react-native';
+import {View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Button, scrollView, FlatList} from 'react-native';
 import { useNavigation, useScrollToTop } from '@react-navigation/native';
-import NuevoReto from '../screens/NuevoReto';
-import Firebase from '../utils/firebase';
-import { querySnapshot } from 'firebase/firestore';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
+import { ListItem } from 'react-native-elements';
 
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../utils/Firebase';
 
-
-
+const retosList = [{id: 1, nombre: 'test'}];
 
 async function test() {
     const querySnapshot = await getDocs(collection(db, "retos"));
     querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} => ${doc.data()}`);
+        retosList.push(doc.data());
     });
+    console.log(retosList)
 }
 
 const screenHeight= Dimensions.get("screen").height;
 
+
+
+const Item = ({ title }) => (
+    <View style={styles.item}>
+      <Text>{title}</Text>
+    </View>
+  );
+
 const Evolucion = () => {
+
+    test();
     
     const navigation = useNavigation();
 
-    test();
+    const renderItem = ({ item }) => (
+        <Item title={item.nombre} />
+      );
+
 
     return(
         <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
@@ -34,6 +44,11 @@ const Evolucion = () => {
                     <Text>Hola</Text>
                 </View>
                 <Text>This is the Second screen</Text>
+                <FlatList
+                    data={retosList}
+                    renderItem={renderItem}
+                    keyExtractor={item => item.id}
+                />
 
 
                 
@@ -68,13 +83,20 @@ const styles = StyleSheet.create({
     addButtonText:{
         color: 'white',
         fontSize: 25,
+        backgroundColor: '#000000',
         
     },
     containerMain: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    }
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
 })
 
 export default Evolucion;
