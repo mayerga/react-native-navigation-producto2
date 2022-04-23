@@ -2,30 +2,31 @@ import React, {useState} from 'react';
 import {View, Text, SafeAreaView, Button, TextInput, StyleSheet} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Firebase from '../utils/firebase';
+import { db } from '../utils/Firebase';
 
 const NuevoReto = (props) => {
     
     const navigation = useNavigation();
     const [state, setstate] = useState({
-        name: '',
-        email: '',
-        phone: ''
+        nombre: '',
+        categoria: '',
+        detalle: ''
     });
 
-    const handleChangeText = (name, value) => {
-        setstate({...state, [name]: value})
+    const handleChangeText = (nombre, value) => {
+        setstate({...state, [nombre]: value})
     }
 
-    const saveNewReto = async () => {
-        if (state.name === ''){
-            alert('Please provide a reto')
+    const saveNewReto = async (props) => {
+        if(state.nombre === ''){
+            alert('Por favor, añade un nombre')
         } else {
-            await Firebase().db.collecion('users').add({
-                name: state.name,
-                email: state.email,
-                phone: state.phone
+            await db.collection('retos').add({
+                nombre: state.nombre,
+                categoria: state.categoria,
+                detalle: state.detalle
             })
-            props.navigation.navigate('Evolucion');
+            navigation.navigate('Evolucion');
         }
     }
 
@@ -33,13 +34,13 @@ const NuevoReto = (props) => {
         <SafeAreaView style={styles.container}>
             <Text>Pantalla de NUEVO RETO</Text>
             <View style={styles.inputGroup}>
-                <TextInput placeholder="Nombre Reto" onChangeText={(value) => handleChangeText('name', value)}/>
+                <TextInput placeholder="Nombre Reto" onChangeText={(value) => handleChangeText('nombre', value)}/>
             </View>
             <View style={styles.inputGroup}>
-                <TextInput placeholder="Categoría" onChangeText={(value) => handleChangeText('email', value)}/>
+                <TextInput placeholder="Categoría" onChangeText={(value) => handleChangeText('categoria', value)}/>
             </View>
             <View style={styles.inputGroup}>
-                <TextInput placeholder="Tiempo" onChangeText={(value) => handleChangeText('phone', value)}/>
+                <TextInput placeholder="Detalle" onChangeText={(value) => handleChangeText('detalle', value)}/>
             </View>
             <View>
                 <Button title="Add Reto" onPress={() => saveNewReto()}></Button>
