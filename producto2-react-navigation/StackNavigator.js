@@ -7,6 +7,7 @@ import Evolucion from './screens/Evolucion';
 import NuevoReto from './screens/NuevoReto';
 import Perfil from './screens/Perfil';
 import Contactar from './screens/Contactar';
+import DetalleReto from './screens/DetalleReto';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +52,15 @@ const StackNavigator = () => {
                         <Button
                           onPress={() => navigation.navigate("Home")}
                           title="Home"
+                          color="black"
+                        />
+                      ),
+                }}/>
+                <Stack.Screen name="DetalleReto" component={DetalleReto(navigation)} options={{
+                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                        <Button
+                          onPress={() => navigation.navigate("Evolucion")}
+                          title="Evolucion"
                           color="black"
                         />
                       ),

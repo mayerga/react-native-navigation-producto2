@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Button, scrollView, FlatList} from 'react-native';
-import { useNavigation, useScrollToTop } from '@react-navigation/native';
-import { ListItem } from 'react-native-elements';
-
-import { collection, getDocs } from "firebase/firestore";
-import { db } from '../utils/Firebase';
+import React from 'react';
+import {View, Text, SafeAreaView, Button, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const screenHeight= Dimensions.get("screen").height;
 
-const Item = ({ title, description, completado }) => (
-    <View style={styles.item}>
-      <Text>{title}</Text>
-      <Text>{description}</Text>
-      <Text>{completado}</Text>
-    </View>
-  );
+const Evolucion = () => {
+    
+    const navigation = useNavigation();
+//Comentado porque no se deberia ser necesario
+/*const Item = ({ title, description, completado }) => (
+    <TouchableOpacity onPress={pulsar}>
+        <View style={styles.item}>        
+            <Text>{title}</Text>
+            <Text>{description}</Text>
+            <Text>{completado}</Text>     
+        </View>
+    </TouchableOpacity>
+  );*/
 
 const Evolucion = () => {
     
@@ -28,26 +30,34 @@ const Evolucion = () => {
         //retosList = []
         const querySnapshot = await getDocs(collection(db, "retos"));
         setRetos(querySnapshot.docs);
-
     }
 
     const navigation = useNavigation();
 
-    const renderItem = ({ item }) => (
+    //comentado porque ya no deberia ser necesario
+    /*const renderItem = ({ item }) => (
         <Item title={item.data().nombre} description={item.data().detalle} completado={item.data().completado}/>
-      );
-
+      );*/
 
     return(
-        <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
+        <SafeAreaView style={{flex: 1}}>
             <View style={styles.containerMain}>
                 <View>
                     <Text>Hola</Text>
                 </View>
                 <Text>This is the Second screen</Text>
+
                 <FlatList
                     data={retos}
-                    renderItem={renderItem}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={() => navigation.navigate("DetalleReto", item)}>
+                            <View style={styles.item}>        
+                                <Text>{item.data().nombre}</Text>
+                                <Text>{item.data().detalle}</Text>
+                                <Text>{item.data().completado}</Text>     
+                            </View>
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={item => item.id}
                 />
 
@@ -55,7 +65,8 @@ const Evolucion = () => {
                 {/* Botón para agregar tarea */}
                 <View style={styles.addButtonLocator}>
                     <TouchableOpacity style = {styles.addButton}
-                    onPress={() => navigation.navigate("NuevoReto")}>
+                    onPress={() => navigation.navigate("NuevoReto", item)}>
+
                         <Text style={styles.addButtonText}>+</Text>
                     </TouchableOpacity>
                 </View>
@@ -64,6 +75,7 @@ const Evolucion = () => {
 
         </SafeAreaView>
     )
+}
 }
 
 const styles = StyleSheet.create({
@@ -83,20 +95,13 @@ const styles = StyleSheet.create({
     addButtonText:{
         color: 'white',
         fontSize: 25,
-        backgroundColor: '#000000',
         
     },
     containerMain: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    item: {
-        backgroundColor: '#f9c2ff',
-        padding: 20,
-        marginVertical: 8,
-        marginHorizontal: 16,
-      },
+    }
 })
 
 export default Evolucion;
