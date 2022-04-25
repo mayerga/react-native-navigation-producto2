@@ -34,7 +34,9 @@ const Evolucion = () => {
     const navigation = useNavigation();
 
     const renderItem = ({ item }) => (
+        <TouchableOpacity>
         <Item title={item.data().nombre} description={item.data().detalle} completado={item.data().completado}/>
+        </TouchableOpacity>
       );
 
 
