@@ -10,7 +10,10 @@ const NuevoReto = (props) => {
     const [state, setstate] = useState({
         nombre: '',
         categoria: '',
-        detalle: ''
+        detalle: '',
+        completado: '',
+        periodicidad: '',
+        tiempo: ''
     });
 
     const handleChangeText = (nombre, value) => {
@@ -24,7 +27,10 @@ const NuevoReto = (props) => {
             const docRef = await addDoc(collection(db, "retos"), {
                 nombre: state.nombre,
                 categoria: state.categoria,
-                detalle: state.detalle
+                detalle: state.detalle,
+                completado: state.completado,
+                periodicidad: state.periodicidad,
+                tiempo: state.tiempo
 
             })
             console.log("Document written with ID: ", docRef.id);
@@ -43,6 +49,15 @@ const NuevoReto = (props) => {
             </View>
             <View style={styles.inputGroup}>
                 <TextInput placeholder="Detalle" onChangeText={(value) => handleChangeText('detalle', value)}/>
+            </View>
+            <View style={styles.inputGroup}>
+                <TextInput placeholder="Completado" onChangeText={(value) => handleChangeText('completado', value)}/>
+            </View>
+            <View style={styles.inputGroup}>
+                <TextInput placeholder="Periodicidad" onChangeText={(value) => handleChangeText('periodicidad', value)}/>
+            </View>
+            <View style={styles.inputGroup}>
+                <TextInput placeholder="Tiempo" onChangeText={(value) => handleChangeText('tiempo', value)}/>
             </View>
             <View>
                 <Button title="Add Reto" onPress={() => saveNewReto()}></Button>
