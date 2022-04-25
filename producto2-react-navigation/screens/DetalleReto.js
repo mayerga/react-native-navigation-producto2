@@ -10,7 +10,7 @@ const DetalleReto = ({route}) => {
     return(
         <SafeAreaView style={styles.containerMain}>
             <View style={styles.item}>
-                <Text style={styles.textoBoxes}>Pantalla de detalle del reto { route.params.data().nombre } </Text>
+                <Text style={styles.textoBoxes}>Pantalla de detalle del reto: { route.params.data().nombre } </Text>
                 <Text style={styles.textoBoxes2}> 
                     Nombre: 
                     <Text style={styles.textoBoxes3}>
@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     },textoBoxes3:{
         padding: 2,
         fontSize: 15,
-        color: 'white'
+        color: 'black'
     }
 })
 

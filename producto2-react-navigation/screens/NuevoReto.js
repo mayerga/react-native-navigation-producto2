@@ -40,7 +40,6 @@ const NuevoReto = (props) => {
 
     return(
         <SafeAreaView style={styles.container}>
-            <Text>Pantalla de NUEVO RETO</Text>
             <View style={styles.inputGroup}>
                 <TextInput placeholder="Nombre Reto" onChangeText={(value) => handleChangeText('nombre', value)}/>
             </View>
