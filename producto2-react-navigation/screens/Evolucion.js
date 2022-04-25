@@ -8,15 +8,19 @@ import { db } from '../utils/Firebase';
 
 const screenHeight= Dimensions.get("screen").height;
 
-const Item = ({ title, description, completado }) => (
-    <View style={styles.item}>
-      <Text>{title}</Text>
-      <Text>{description}</Text>
-      <Text>{completado}</Text>
-    </View>
-  );
-
 const Evolucion = () => {
+    
+    const navigation = useNavigation();
+//Comentado porque no se deberia ser necesario
+/*const Item = ({ title, description, completado }) => (
+    <TouchableOpacity onPress={pulsar}>
+        <View style={styles.item}>        
+            <Text>{title}</Text>
+            <Text>{description}</Text>
+            <Text>{completado}</Text>     
+        </View>
+    </TouchableOpacity>
+  );*/
     
     const [retos, setRetos] = useState({});
 
@@ -28,28 +32,27 @@ const Evolucion = () => {
         //retosList = []
         const querySnapshot = await getDocs(collection(db, "retos"));
         setRetos(querySnapshot.docs);
-
     }
 
-    const navigation = useNavigation();
-
-    const renderItem = ({ item }) => (
-        <TouchableOpacity>
+    //comentado porque ya no deberia ser necesario
+    /*const renderItem = ({ item }) => (
         <Item title={item.data().nombre} description={item.data().detalle} completado={item.data().completado}/>
-        </TouchableOpacity>
-      );
-
+      );*/
 
     return(
-        <SafeAreaView style={{flex: 1, marginHorizontal: 20}}>
+        <SafeAreaView style={{flex: 1}}>
             <View style={styles.containerMain}>
-                <View>
-                    <Text>Hola</Text>
-                </View>
-                <Text>This is the Second screen</Text>
                 <FlatList
                     data={retos}
-                    renderItem={renderItem}
+                    renderItem={({ item }) => (
+                        <TouchableOpacity onPress={() => navigation.navigate("DetalleReto", item)}>
+                            <View style={styles.item}>        
+                                <Text style={styles.textoBoxes}>{item.data().nombre}</Text>
+                                <Text style={styles.textoBoxes2}>{item.data().detalle}</Text>
+                                <Text style={styles.textoBoxes2}>{item.data().completado}</Text>     
+                            </View>
+                        </TouchableOpacity>
+                    )}
                     keyExtractor={item => item.id}
                 />
 
@@ -57,7 +60,8 @@ const Evolucion = () => {
                 {/* Botón para agregar tarea */}
                 <View style={styles.addButtonLocator}>
                     <TouchableOpacity style = {styles.addButton}
-                    onPress={() => navigation.navigate("NuevoReto")}>
+                    onPress={() => navigation.navigate("NuevoReto", item)}>
+
                         <Text style={styles.addButtonText}>+</Text>
                     </TouchableOpacity>
                 </View>
@@ -84,9 +88,7 @@ const styles = StyleSheet.create({
     },
     addButtonText:{
         color: 'white',
-        fontSize: 25,
-        backgroundColor: '#000000',
-        
+        fontSize: 25,        
     },
     containerMain: {
         flex: 1,
@@ -98,7 +100,23 @@ const styles = StyleSheet.create({
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 16,
-      },
+        backgroundColor: 'darkcyan',
+        borderRadius: 30
+    },
+    textoBoxes:{
+        flex: 1,
+        padding: 2,
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: 'white'
+    },
+    textoBoxes2:{
+        flex: 1,
+        padding: 2,
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'white'
+    }
 })
 
 export default Evolucion;
