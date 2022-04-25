@@ -19,9 +19,10 @@ const StackNavigator = () => {
         <Stack.Navigator screenOptions={{ headerShown: true}}>
             <Stack.Group>
                 <Stack.Screen name="Home" component={Home} options={{
+                    headerStyle: {backgroundColor: '#808080'},
                     title: "Home Screen"}}  />
                 <Stack.Screen name="Evolucion" component={Evolucion} options={{
-                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                    headerStyle: {backgroundColor: '#808080'}, headerRight: () => (
                         <Button
                         onPress={() => navigation.navigate("Home")}
                           title="Home"
@@ -30,7 +31,7 @@ const StackNavigator = () => {
                       ),
                 }}/>
                 <Stack.Screen name="NuevoReto" component={NuevoReto} options={{
-                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                    headerStyle: {backgroundColor: '#808080'}, headerRight: () => (
                         <Button
                           onPress={() => navigation.navigate("Home")}
                           title="Home"
@@ -39,7 +40,7 @@ const StackNavigator = () => {
                       ),
                 }}/>
                 <Stack.Screen name="Perfil" component={Perfil} options={{
-                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                    headerStyle: {backgroundColor: '#808080'}, headerRight: () => (
                         <Button
                           onPress={() => navigation.navigate("Home")}
                           title="Home"
@@ -48,7 +49,7 @@ const StackNavigator = () => {
                       ),
                 }}/>
                 <Stack.Screen name="Contactar" component={Contactar} options={{
-                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                    headerStyle: {backgroundColor: '#808080'}, headerRight: () => (
                         <Button
                           onPress={() => navigation.navigate("Home")}
                           title="Home"
@@ -56,8 +57,8 @@ const StackNavigator = () => {
                         />
                       ),
                 }}/>
-                <Stack.Screen name="DetalleReto" component={DetalleReto(navigation)} options={{
-                    headerStyle: {backgroundColor: 'cadetblue'}, headerRight: () => (
+                <Stack.Screen name="DetalleReto" component={DetalleReto} options={{
+                    headerStyle: {backgroundColor: '#808080'}, headerRight: () => (
                         <Button
                           onPress={() => navigation.navigate("Evolucion")}
                           title="Evolucion"

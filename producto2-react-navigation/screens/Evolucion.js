@@ -1,6 +1,10 @@
-import React from 'react';
-import {View, Text, SafeAreaView, Button, TouchableOpacity, StyleSheet, Dimensions} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, SafeAreaView, TouchableOpacity, StyleSheet, Dimensions, Button, scrollView, FlatList} from 'react-native';
+import { useNavigation, useScrollToTop } from '@react-navigation/native';
+import { ListItem } from 'react-native-elements';
+
+import { collection, getDocs } from "firebase/firestore";
+import { db } from '../utils/Firebase';
 
 const screenHeight= Dimensions.get("screen").height;
 
@@ -17,8 +21,6 @@ const Evolucion = () => {
         </View>
     </TouchableOpacity>
   );*/
-
-const Evolucion = () => {
     
     const [retos, setRetos] = useState({});
 
@@ -32,8 +34,6 @@ const Evolucion = () => {
         setRetos(querySnapshot.docs);
     }
 
-    const navigation = useNavigation();
-
     //comentado porque ya no deberia ser necesario
     /*const renderItem = ({ item }) => (
         <Item title={item.data().nombre} description={item.data().detalle} completado={item.data().completado}/>
@@ -42,19 +42,14 @@ const Evolucion = () => {
     return(
         <SafeAreaView style={{flex: 1}}>
             <View style={styles.containerMain}>
-                <View>
-                    <Text>Hola</Text>
-                </View>
-                <Text>This is the Second screen</Text>
-
                 <FlatList
                     data={retos}
                     renderItem={({ item }) => (
                         <TouchableOpacity onPress={() => navigation.navigate("DetalleReto", item)}>
                             <View style={styles.item}>        
-                                <Text>{item.data().nombre}</Text>
-                                <Text>{item.data().detalle}</Text>
-                                <Text>{item.data().completado}</Text>     
+                                <Text style={styles.textoBoxes}>{item.data().nombre}</Text>
+                                <Text style={styles.textoBoxes2}>{item.data().detalle}</Text>
+                                <Text style={styles.textoBoxes2}>{item.data().completado}</Text>     
                             </View>
                         </TouchableOpacity>
                     )}
@@ -76,7 +71,6 @@ const Evolucion = () => {
         </SafeAreaView>
     )
 }
-}
 
 const styles = StyleSheet.create({
     addButton: {
@@ -94,13 +88,34 @@ const styles = StyleSheet.create({
     },
     addButtonText:{
         color: 'white',
-        fontSize: 25,
-        
+        fontSize: 25,        
     },
     containerMain: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+        backgroundColor: 'darkcyan',
+        borderRadius: 30
+    },
+    textoBoxes:{
+        flex: 1,
+        padding: 2,
+        fontWeight: 'bold',
+        fontSize: 18,
+        color: 'white'
+    },
+    textoBoxes2:{
+        flex: 1,
+        padding: 2,
+        fontWeight: 'bold',
+        fontSize: 15,
+        color: 'white'
     }
 })
 
